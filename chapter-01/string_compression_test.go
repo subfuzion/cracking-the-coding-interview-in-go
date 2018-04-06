@@ -29,6 +29,10 @@ func TestStringCompression(t *testing.T) {
 			"aaa",
 			"a3",
 		},
+		sample{
+			"hello world",
+			"hello world", // not h1e1l2o1 1w1o1r1l1d1"
+		},
 	}
 
 	for _, samp := range tests {
@@ -69,6 +73,7 @@ func compress(s string) string {
 	b.WriteRune(rune(p))
 	b.WriteString(strconv.Itoa(n))
 
+	// no point in returning compressed string unless it's shorter than the original
 	if len(s) <= b.Len() {
 		return s
 	}
