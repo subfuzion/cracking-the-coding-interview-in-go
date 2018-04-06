@@ -44,36 +44,25 @@ func TestStringCompression(t *testing.T) {
 }
 
 func compress(s string) string {
+	// use a string builder for efficiency while building compressed string
+	b := strings.Builder{}
+
 	// string as a character (rune) array
 	chars := []rune(s)
 
-	// previous character to compare
-	p := chars[0]
-
 	// same character counter
-	n := 1
+	n := 0
 
-	b := strings.Builder{}
-
-	for i := 1; i < len(chars); i++ {
-		r := chars[i]
-
-		if r == p {
-			n++
-		} else {
-			b.WriteRune(rune(p))
+	for i := 0; i < len(chars); i++ {
+		n++
+		if i+1 >= len(chars) || chars[i] != chars[i+1] {
+			b.WriteRune(rune(chars[i]))
 			b.WriteString(strconv.Itoa(n))
-			n = 1
+			n = 0
 		}
-
-		p = r
 	}
 
-	// don't forget to write out final character+count
-	b.WriteRune(rune(p))
-	b.WriteString(strconv.Itoa(n))
-
-	// no point in returning compressed string unless it's shorter than the original
+	// don't return compressed string unless it's actually shorter than the original
 	if len(s) <= b.Len() {
 		return s
 	}
