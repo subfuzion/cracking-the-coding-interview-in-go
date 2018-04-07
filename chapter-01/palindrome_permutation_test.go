@@ -38,7 +38,7 @@ func isPalindromePermutation(s string) bool {
 }
 
 func createBitVector(s string) uint32 {
-	var bv uint32 = 0
+	var bv uint32
 
 	// assume ascii
 	chars := strings.Split(s, "")
