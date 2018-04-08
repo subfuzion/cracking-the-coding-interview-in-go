@@ -28,7 +28,7 @@ func (n *Node) Equal(n2 *Node) bool {
 	switch {
 	case n == n2:
 		return true
-	case n2 != nil:
+	case n != nil && n2 != nil:
 		return n.Data == n2.Data
 	}
 	return false
