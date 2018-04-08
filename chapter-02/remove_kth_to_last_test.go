@@ -45,15 +45,23 @@ func TestKthToLast(t *testing.T) {
 	})
 }
 
+// kthToLastRecursive returns kth node and length of list
+// for k=0, kth node is nil; for k=1, kth node is last item in list;
+// k=2, second to last item; etc.
 func kthToLastRecursive(n *Node, k int) (kth *Node, len int) {
+	// base case
 	if n == nil {
 		return nil, 0
 	}
 
+	// keep returning current node until length reaches k
 	kth, len = kthToLastRecursive(n.Next, k)
 	if len < k {
 		return n, len + 1
 	}
 
+	// don't update kth anymore now that the kth node has been identified
+	// no real need to continue incrementing length, but might as well return
+	// something useful (ie, full length of the list traversed)
 	return kth, len + 1
 }
