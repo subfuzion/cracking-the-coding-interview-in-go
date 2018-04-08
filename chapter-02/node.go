@@ -13,19 +13,22 @@ type Node struct {
 
 // Length returns length of single linked list starting from n
 func (n *Node) Length() int {
-	node := n
-	count := 1
-	for node = node.Next; node != nil; {
+	count := 0
+	for node := n; node != nil; {
 		if node != nil {
 			count++
 		}
+		node = node.Next
 	}
 	return count
 }
 
 // Equal returns true if n.Data == n2.Data
 func (n *Node) Equal(n2 *Node) bool {
-	if n2 != nil {
+	switch {
+	case n == n2:
+		return true
+	case n2 != nil:
 		return n.Data == n2.Data
 	}
 	return false
