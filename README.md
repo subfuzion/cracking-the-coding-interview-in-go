@@ -16,9 +16,11 @@ I have implemented the solutions as tests using the Go [testing](https://golang.
 package. I start each implementation by writing the test cases that I would like to pass, and
 then work toward writing the solution.
 
-Each test can be run like this:
+You can run all or specific tests. Examples:
 
-    $ go test chapter-01/urlify_test.go
+    $ go test -v -timeout 30s ./...
+
+    $ go test -v -timeout 30s -run ^TestPartition$ ./chapter-02
 
 
 I've only just begun, so this is definitely a work in progress.
