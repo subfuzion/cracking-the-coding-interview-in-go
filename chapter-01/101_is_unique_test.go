@@ -43,13 +43,8 @@ func (set *RuneSet) Add(r rune) bool {
 }
 
 func IsUnique(s string) bool {
-	runes := []rune{}
-	for _, r := range s {
-		runes = append(runes, r)
-	}
-
 	set := NewRuneSet()
-	for _, r := range runes {
+	for _, r := range []rune(s) {
 		if ok := set.Add(r); !ok {
 			return false
 		}
