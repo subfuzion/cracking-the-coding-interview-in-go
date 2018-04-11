@@ -45,6 +45,8 @@ func TestFibonacci(t *testing.T) {
 	})
 }
 
+// fibonacci value of a number n is equal to the sum of the fibonacci value of the two preceding numbers
+// for n = 0, return 0; for n = 1, return 1
 func fibRecursive(n int) int {
 	switch n {
 	case 0:
@@ -56,6 +58,8 @@ func fibRecursive(n int) int {
 	}
 }
 
+// fibonacci value of a number n is equal to the sum of the fibonacci value of the two preceding numbers
+// for n = 0, return 0; for n = 1, return 1
 func fib(n int) int {
 	switch n {
 	case 0:

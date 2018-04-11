@@ -30,6 +30,10 @@ func TestFizzBuzz(t *testing.T) {
 	}
 }
 
+// fizzbuzz prints to a string all digits from 1 to n
+// for every 3rd digit, print "Fizz"
+// for every 5 digit, print "Buzz
+// for every multiple of 3 and 5, print "FizzBuzz"
 func fizzbuzz(n int) string {
 	b := strings.Builder{}
 	for i := 1; i <= n; i++ {

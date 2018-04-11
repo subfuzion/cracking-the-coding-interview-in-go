@@ -22,6 +22,8 @@ func TestFactorial(t *testing.T) {
 	}
 }
 
+// factorial is the product of an integer n and all integers less than it
+// for n = 0 or n = 1, return 1
 func factorial(n int) int {
 	switch n {
 	case 0: // base case

@@ -36,6 +36,8 @@ func TestPrime(t *testing.T) {
 	}
 }
 
+// prime is a number n that can only be divided by 1 and itself
+// for n = 0 or n = 1, return false
 func prime(n int) bool {
 	for i := 2; i < n; i++ {
 		if n%i == 0 {
