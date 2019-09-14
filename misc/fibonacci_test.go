@@ -28,8 +28,7 @@ import (
 	"testing"
 )
 
-// FibonacciFunc takes a non-negative integer and returns the sum of
-// the fibonacci numbers of the two previous non-negative integers
+// FibonacciFunc declares a type of Fibonacci function
 type FibonacciFunc func(int) int
 
 func TestFibonacci(t *testing.T) {

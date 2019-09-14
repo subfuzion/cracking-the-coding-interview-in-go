@@ -24,8 +24,7 @@ import (
 	"testing"
 )
 
-// The factorial function takes an integer and returns the product of the
-// integer and all integers less than it
+// FactorialFunc declares a type of factorial function
 type FactorialFunc func(int) int
 
 func TestFactorial(t *testing.T) {
