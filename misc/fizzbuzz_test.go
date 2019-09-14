@@ -1,4 +1,4 @@
-package fizzbuzz
+package misc
 
 import (
 	"strconv"

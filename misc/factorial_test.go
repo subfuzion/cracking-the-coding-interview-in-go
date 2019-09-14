@@ -1,4 +1,4 @@
-package factorial
+package misc
 
 import (
 	"testing"
