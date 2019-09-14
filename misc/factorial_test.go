@@ -8,13 +8,13 @@ The factorial is a quantity defined for all non-negative integers:
   of the integer and all positive integers less than it.
 
 Examples:
-0 =>                       =   1 (by definition)
-1 =>                    1  =   1 (there are no positive integers less than 1)
-2 =>                2 * 1  =   2
-3 =>            3 * 2 * 1  =   6
-4 =>        4 * 3 * 2 * 1  =  24
-5 =>    5 * 4 * 3 * 2 * 1  = 120
-6 => 6 * 5 * 4 * 3 * 2 * 1 = 720
+0 =>                        =   1 (by definition)
+1 =>                     1  =   1 (there are no positive integers less than 1)
+2 =>                 2 * 1  =   2
+3 =>             3 * 2 * 1  =   6
+4 =>         4 * 3 * 2 * 1  =  24
+5 =>     5 * 4 * 3 * 2 * 1  = 120
+6 => 6 * 5 * 4 * 3 * 2 * 1  = 720
 
 */
 
@@ -28,34 +28,30 @@ import (
 // integer and all integers less than it
 type FactorialFunc func(int) int
 
-// map of inputs to expected results for factorial
-var tests = [][]int{
-	{0, 1},
-	{1, 1},
-	{2, 2},
-	{3, 6},
-	{4, 24},
-	{5, 120},
-	{6, 720},
-}
-
-// factorial implementations to test
-var funcs = map[string]FactorialFunc{
-	"factorial":          factorial,
-	"factorialRecursive": factorialRecursive,
-}
-
 func TestFactorial(t *testing.T) {
-	for name, f := range funcs {
+	tests := [][]int{
+		{0, 1},
+		{1, 1},
+		{2, 2},
+		{3, 6},
+		{4, 24},
+		{5, 120},
+		{6, 720},
+	}
+
+	test := func(t *testing.T, name string, fact FactorialFunc) {
 		t.Run(name, func(t *testing.T) {
 			for _, test := range tests {
-				if actual := f(test[0]); actual != test[1] {
+				if actual := fact(test[0]); actual != test[1] {
 					t.Fatalf("\n[%s]: for n=%d, expected: %d, actual: %d",
 						name, test[0], test[1], actual)
 				}
 			}
 		})
 	}
+
+	test(t, "non-recursive", factorial)
+	test(t, "recursive", factorialRecursive)
 }
 
 func factorial(n int) int {
