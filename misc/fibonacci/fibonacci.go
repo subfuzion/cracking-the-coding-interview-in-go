@@ -45,13 +45,16 @@ var SampleTestCases = []TestCase{
 	{9, 34},
 }
 
-
 //
 // Solution
 //
 // Listed in order of increasing speed.
-// There is a significant difference in performance between the non-recursive
-// and recursive solutions,
+// There is a significant difference in performance between the recursive
+// solutions (one memoizes).
+//
+// There is a significant difference in performance between the recursive
+// and non-recursive solutions. The non-recursive solutions don't make
+// function calls and won't run out of stack.
 //
 // Run benchmarks to analyze for yourself.
 //
@@ -68,49 +71,44 @@ func FibRecursive1(n int) int {
 }
 
 func FibRecursive2(n int) int {
-	if (n < 2) {
+	if n < 2 {
 		return n
 	}
 
-	var fibs = make([]int, n)
-	fibs[1] = 1
+	var memo = make([]int, n+1)
+	memo[1] = 1
 
-	var fib func(int)int
-
-	fib = func(n int) int {
-		if n == 0 {
-			return 0
+	var memoize func(int) int
+	memoize = func(n int) int {
+		if n < 2 {
+			return n
 		}
 
 		// already memoized?
-		if fibs[n] != 0 {
-			return fibs[n]
-		}
+		// if memo[n] != 0 {
+		// 	return memo[n]
+		// }
 
-		a := fibs[n-2]
+		a := memo[n-2]
 		if a == 0 {
-			a = fib(n-2)
+			a = memoize(n - 2)
 		}
 
-		b := fibs[n-1]
+		b := memo[n-1]
 		if b == 0 {
-			b = fib(n-1)
+			b = memoize(n - 1)
 		}
 
 		// make sure to memoize result
-		fibs[n] = a + b
-		return fibs[n]
+		memo[n] = a + b
+		return memo[n]
 	}
-
-	return fib(n-2) + fib(n-1)
+	return memoize(n-2) + memoize(n-1)
 }
 
 func Fib1(n int) int {
-	switch n {
-	case 0:
-		return 0
-	case 1:
-		return 1
+	if n < 2 {
+		return n
 	}
 
 	a := 0
@@ -126,39 +124,14 @@ func Fib1(n int) int {
 }
 
 func Fib2(n int) int {
-	if (n < 2) {
-		return n
-	}
+	f := n
 
 	a := 0
 	b := 1
-	sum := 0
 	for i := 2; i <= n; i++ {
-		sum = a + b
+		f = a + b
 		a = b
-		b = sum
+		b = f
 	}
-
-	return sum
+	return f
 }
-
-func Fib3(n int) int {
-	if n == 0 {
-		return 0
-	}
-	if n == 1 {
-		return 1
-	}
-
-	a := 0
-	b := 1
-	sum := 0
-	for i := 2; i <= n; i++ {
-		sum = a + b
-		a = b
-		b = sum
-	}
-
-	return sum
-}
-
