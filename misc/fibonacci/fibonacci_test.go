@@ -10,11 +10,15 @@ import "testing"
 
 // TODO: add additional test solutions here
 var tests = map[string]Func{
-	"FibRecursive1": FibRecursive1,
-	"FibRecursive2": FibRecursive2,
-	"Fib1": Fib1,
-	"Fib2": Fib2,
-	"Fib3": Fib3,
+	// "FibRecursive1": FibRecursive1,
+	// "FibRecursive2": FibRecursive2,
+	// "Fib1": Fib1,
+	// "Fib2": Fib2,
+	// "Fib3": Fib3,
+	"fib":       fib,
+	"fibr":      fibr,
+	"fibr_memo": fibr_memo,
+	"fibx":      fibx,
 }
 
 // TestSolution will run tests for the named solutions mapped
@@ -55,7 +59,7 @@ func BenchmarkSolution(b *testing.B) {
 // RunBenchmark runs a benchmark using the supplied function and test data
 func RunBenchmark(name string, b *testing.B, f Func, n int) {
 	b.Run(name, func(b *testing.B) {
-		b.Logf("f(%d), loop (b.N) = %d\n", n, b.N)
+		//b.Logf("f(%d), loop (b.N) = %d\n", n, b.N)
 		for i := 0; i < b.N; i++ {
 			f(n)
 		}
