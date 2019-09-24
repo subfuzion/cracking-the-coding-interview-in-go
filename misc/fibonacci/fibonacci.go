@@ -45,7 +45,6 @@ var SampleTestCases = []TestCase{
 	{9, 34},
 }
 
-
 //
 // Solution
 //
@@ -67,15 +66,37 @@ func FibRecursive1(n int) int {
 	}
 }
 
-func FibRecursive2(n int) int {
-	if (n < 2) {
+func FibRecursiveMemo1(n int) int {
+	if n < 2 {
+		return n
+	}
+
+	memo := make([]int, n+1)
+	memo[1] = 1
+
+	var f func(int) int
+	f = func(n int) int {
+		if n < 2 {
+			return n
+		}
+		if memo[n] == 0 {
+			memo[n] = f(n-2) + f(n-1)
+		}
+		return memo[n]
+	}
+
+	return f(n-2) + f(n-1)
+}
+
+func FibRecursiveMemo2(n int) int {
+	if n < 2 {
 		return n
 	}
 
 	var fibs = make([]int, n)
 	fibs[1] = 1
 
-	var fib func(int)int
+	var fib func(int) int
 
 	fib = func(n int) int {
 		if n == 0 {
@@ -89,12 +110,12 @@ func FibRecursive2(n int) int {
 
 		a := fibs[n-2]
 		if a == 0 {
-			a = fib(n-2)
+			a = fib(n - 2)
 		}
 
 		b := fibs[n-1]
 		if b == 0 {
-			b = fib(n-1)
+			b = fib(n - 1)
 		}
 
 		// make sure to memoize result
@@ -126,7 +147,7 @@ func Fib1(n int) int {
 }
 
 func Fib2(n int) int {
-	if (n < 2) {
+	if n < 2 {
 		return n
 	}
 
@@ -162,3 +183,28 @@ func Fib3(n int) int {
 	return sum
 }
 
+func Fibx1(n int) int {
+	arr := []int{0, 1}
+
+	for i := 2; i <= n; i++ {
+		arr[i%2] = arr[0] + arr[1]
+	}
+
+	return arr[n%2]
+}
+
+func Fibx2(n int) int {
+	if n < 2 {
+		return n
+	}
+
+	a := 1
+	b := 0
+
+	for i := 2; i <= n; i++ {
+		a = a + b
+		b = a - b
+	}
+
+	return a
+}
