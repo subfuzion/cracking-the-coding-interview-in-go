@@ -43,6 +43,12 @@ var SampleTestCases = []TestCase{
 	{7, 13},
 	{8, 21},
 	{9, 34},
+	{10, 55},
+	{11, 89},
+	{12, 144},
+	{13, 233},
+	{14, 277},
+	{15, 610},
 }
 
 //
@@ -183,6 +189,7 @@ func Fib3(n int) int {
 	return sum
 }
 
+// Fibx1 uses only two array slots for space.
 func Fibx1(n int) int {
 	arr := []int{0, 1}
 
@@ -193,14 +200,18 @@ func Fibx1(n int) int {
 	return arr[n%2]
 }
 
+// Fibx2 uses only two variables for space
 func Fibx2(n int) int {
 	if n < 2 {
 		return n
 	}
 
+	// At the start of each loop:
+	//   a = n-1
+	//   b = n-2
+	// At the end of each loop, a = fib(i)
 	a := 1
 	b := 0
-
 	for i := 2; i <= n; i++ {
 		a = a + b
 		b = a - b

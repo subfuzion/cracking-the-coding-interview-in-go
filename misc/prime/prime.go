@@ -27,18 +27,20 @@ be factors (2, n/2).
 */
 package prime
 
+import "testing"
+
 // Func declares a type of prime number function such
 // that Func(n) => true if n is prime
 type Func func(int) bool
 
-// TestCase for Func(input) defines expected result
-type TestCase struct {
+// Test for Func(input) defines expected result
+type Test struct {
 	Input    int
 	Expected bool
 }
 
-// SampleTestCases contains test data (maps PrimeFunc(input) => expected result)
-var SampleTestCases = []TestCase{
+// TestData contains test data (maps PrimeFunc(input) => expected result)
+var TestData = []Test{
 	{0, false},
 	{1, false},
 	{2, true},
@@ -78,71 +80,23 @@ var SampleTestCases = []TestCase{
 	{230, false},
 }
 
-//
-// Solution
-//
-// The solution isn't worth optimizing. The following are all 0(n).
-// They are ranked in order of fastest to slowest, but the actual
-// difference for Prime(10^10) was negligible between them.
-//
-// Run benchmarks on your own machine and see for yourself:
-// go test -bench .
-
-// This one is clear and technically was the fastest.
-func Prime1(n int) bool {
-	if n < 2 {
-		return false
-	}
-	if n == 2 {
-		return true
-	}
-	for i := 2; i < n; i++ {
-		if n%i == 0 {
-			return false
-		}
-	}
-	return true
-}
-
-// This one appears to be optimized and yet benchmarks reveal
-// very little benefit.
-func Prime2(n int) bool {
-	mid := n / 2
-	for i := 2; i <= mid; i++ {
-		if n%i == 0 {
-			return false
-		}
-	}
-	return n > 1
-}
-
-// Nice and concise...
-// Compared to the clarity of the first solution, is the
-// brevity of this one worth it? (For some types of solutions,
-// the answer might be yes.)
-func Prime3(n int) bool {
-	for i := 2; i < n; i++ {
-		if n%i == 0 {
-			return false
-		}
-	}
-	return n > 1
-}
-
-// Nothing gained here by using a switch statement.
-func Prime4(n int) bool {
-	switch n {
-	case 0:
-		return false
-	case 1: return false
-	case 2: return true
-	default:
-		for i := 2; i < n; i++ {
-			if n%i == 0 {
-				return false
+// RunTest runs a test using the supplied function and test data
+func RunTest(t *testing.T, name string, f Func) {
+	t.Run(name, func(t *testing.T) {
+		for _, test := range TestData {
+			if actual := f(test.Input); actual != test.Expected {
+				t.Errorf("\nfor n=%d, expected: %t, actual: %t", test.Input, test.Expected, actual)
 			}
 		}
-		return true
-	}
+	})
 }
 
+// RunBenchmark runs a benchmark using the supplied function and argument
+func RunBenchmark(b *testing.B, name string, f Func, n int) {
+	b.Run(name, func(b *testing.B) {
+		// b.Logf("f(%d), loop (b.N) = %d\n", n, b.N)
+		for i := 0; i < b.N; i++ {
+			f(n)
+		}
+	})
+}
